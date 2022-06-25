@@ -8,14 +8,19 @@ function Book(title, author, pages, isRead) {
 }
 
 // Starting books for testing
-library.push(new Book("Poop", "Me", "999", "yes"));
-library.push(new Book("Dead Again", "Johnny Dead", "666", "nopes"));
+library.push(new Book("Example Book", "Delete It", "0", true));
 
 function addBookToLibrary() {
   let title = prompt("Book's title:");
   let author = prompt("Book's author:");
   let pages = prompt("Nubmer of pages:");
-  let isRead = prompt("Have you read it?");
+  let isReadString = prompt("Have you read it?");
+  let isRead;
+  if (isReadString == "yes" || isReadString == "y") {
+    isRead = true;
+  } else {
+    isRead = false;
+  }
 
   library.push(new Book(title, author, pages, isRead));
   displayLibrary();
@@ -62,6 +67,15 @@ function displayLibrary() {
       element.textContent = text + book[property];
       bookCard.appendChild(element);
     }
+    let readBtn = document.createElement("button");
+    readBtn.classList.toggle("read-book-btn");
+    readBtn.textContent = "!read";
+    readBtn.addEventListener("click", () => {
+      library[readBtn.parentElement.dataset.index].isRead =
+        !library[readBtn.parentElement.dataset.index].isRead;
+      displayLibrary();
+    });
+    bookCard.appendChild(readBtn);
     let removeBtn = document.createElement("button");
     removeBtn.classList.toggle("remove-book-btn");
     removeBtn.textContent = "REMOVE BOOK";
