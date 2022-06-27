@@ -1,91 +1,90 @@
-const library = [];
+class Library {
+  static books = [];
 
-function Book(title, author, pages, isRead) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.isRead = isRead;
-}
+  static newBtn;
+  static holder;
 
-// Starting books for testing
-library.push(new Book("Example Book", "Delete It", "0", true));
-
-function addBookToLibrary() {
-  let title = prompt("Book's title:");
-  let author = prompt("Book's author:");
-  let pages = prompt("Nubmer of pages:");
-  let isReadString = prompt("Have you read it?");
-  let isRead;
-  if (isReadString == "yes" || isReadString == "y") {
-    isRead = true;
-  } else {
-    isRead = false;
+  static init() {
+    this.newBtn = document.querySelector(".new-book-btn");
+    this.newBtn.addEventListener("click", this.addBook);
+    this.holder = document.querySelector(".holder");
+    this.books.push(new Book("Mamu", "Dick Dickenson", 453));
+    this.display();
   }
 
-  library.push(new Book(title, author, pages, isRead));
-  displayLibrary();
-}
+  static addBook = () => {
+    const title = prompt("Book's title:");
+    const author = prompt("Book's author:");
+    const pages = prompt("Number of pages:");
 
-const newBtn = document.querySelector(".new-book-btn");
-newBtn.addEventListener("click", addBookToLibrary);
+    this.books.push(new Book(title, author, pages));
 
-const holder = document.querySelector(".holder");
-
-function displayLibrary() {
-  // Clear display before repopulating
-  while (holder.hasChildNodes()) {
-    holder.removeChild(holder.lastChild);
+    this.display();
   }
-
-  for (const book of library) {
-    let bookCard = document
-      .createElement("div");
-    bookCard.classList
-      .toggle("book");
-    bookCard.dataset.index = library.indexOf(book);
-    for (property in book) {
-      let element = document.createElement("p");
-      element.classList.toggle(property);
-      let text;
-      switch (property) {
-        case "title":
-          text = "Title: ";
-          break;
-        case "author":
-          text = "Author: ";
-          break;
-        case "pages":
-          text = "Pages: ";
-          break;
-        case "isRead":
-          text = "Read: ";
-          break;
-        default:
-          text = "Poop";
-          break;
-      }
-      element.textContent = text + book[property];
-      bookCard.appendChild(element);
+  static display() {
+    while (this.holder.hasChildNodes()) {
+      this.holder.removeChild(this.holder.lastChild);
     }
-    let readBtn = document.createElement("button");
-    readBtn.classList.toggle("read-book-btn");
-    readBtn.textContent = "!read";
-    readBtn.addEventListener("click", () => {
-      library[readBtn.parentElement.dataset.index].isRead =
-        !library[readBtn.parentElement.dataset.index].isRead;
-      displayLibrary();
-    });
-    bookCard.appendChild(readBtn);
-    let removeBtn = document.createElement("button");
-    removeBtn.classList.toggle("remove-book-btn");
-    removeBtn.textContent = "REMOVE BOOK";
-    removeBtn.addEventListener("click", () => {
-      library.splice(removeBtn.parentElement.dataset.index, 1);
-      displayLibrary();
-    });
-    bookCard.appendChild(removeBtn);
-    holder.appendChild(bookCard);
+
+    for (const book of this.books) {
+      let bookCard = document
+        .createElement("div");
+      bookCard.classList
+        .toggle("book");
+      bookCard.dataset.index = this.books.indexOf(book);
+      for (const property in book) {
+        let element = document.createElement("p");
+        element.classList.toggle(property);
+        let text;
+        switch (property) {
+          case "title":
+            text = "Title: ";
+            break;
+          case "author":
+            text = "Author: ";
+            break;
+          case "pages":
+            text = "Pages: ";
+            break;
+          case "read":
+            text = "Read: ";
+            break;
+          default:
+            text = "Poop";
+            break;
+        }
+        element.textContent = text + book[property];
+        bookCard.appendChild(element);
+      }
+      let readBtn = document.createElement("button");
+      readBtn.classList.toggle("read-book-btn");
+      readBtn.textContent = "read/unread";
+      readBtn.addEventListener("click", () => {
+        this.books[readBtn.parentElement.dataset.index].read =
+          !this.books[readBtn.parentElement.dataset.index].read;
+        this.display();
+      });
+      bookCard.appendChild(readBtn);
+      let removeBtn = document.createElement("button");
+      removeBtn.classList.toggle("remove-book-btn");
+      removeBtn.textContent = "REMOVE BOOK";
+      removeBtn.addEventListener("click", () => {
+        this.books.splice(removeBtn.parentElement.dataset.index, 1);
+        this.display();
+      });
+      bookCard.appendChild(removeBtn);
+      this.holder.appendChild(bookCard);
+    }
   }
 }
 
-displayLibrary();
+class Book {
+  constructor(title, author, pages) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = false;
+  }
+}
+
+Library.init();
