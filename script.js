@@ -38,10 +38,8 @@ function displayLibrary() {
   }
 
   for (const book of library) {
-    let bookCard = document
-      .createElement("div");
-    bookCard.classList
-      .toggle("book");
+    let bookCard = document.createElement("div");
+    bookCard.classList.toggle("book");
     bookCard.dataset.index = library.indexOf(book);
     for (property in book) {
       let element = document.createElement("p");
