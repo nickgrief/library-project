@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
     <script src="./script.js" defer></script>
     <title>Library</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <h1>Library</h1>
     <h4>Add your books if you have nothing better to do :^)</h4>
     <div class="holder"></div>
-    <button class="new-book-btn">NEW BOOK</button>
-</body>
-
+    <form>
+      <fieldset>
+        <legend>Add new book</legend>
+        <label for="title">Title: </label>
+        <input type="text" name="title" id="title" value="" required />
+        <label for="author">Author: </label>
+        <input type="text" name="author" id="author" required />
+        <label for="pages">Pages: </label>
+        <input type="number" name="pages" id="pages" required />
+        <fieldset required>
+          <legend>Have you read it?</legend>
+          <label for="yes">Yes </label>
+          <input type="radio" name="is-read" id="yes" value="yes" checked />
+          <label for="no">No </label>
+          <input type="radio" name="is-read" id="no" value="no" />
+        </fieldset>
+        <button type="button" class="new-book-btn">NEW BOOK</button>
+      </fieldset>
+    </form>
+  </body>
 </html>

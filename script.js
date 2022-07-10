@@ -10,24 +10,53 @@ function Book(title, author, pages, isRead) {
 // Starting books for testing
 library.push(new Book("Example Book", "Delete It", "0", true));
 
-function addBookToLibrary() {
-  let title = prompt("Book's title:");
-  let author = prompt("Book's author:");
-  let pages = prompt("Nubmer of pages:");
-  let isReadString = prompt("Have you read it?");
-  let isRead;
-  if (isReadString == "yes" || isReadString == "y") {
-    isRead = true;
-  } else {
-    isRead = false;
+function submitBook() {
+  const titleForm = document.getElementById("title");
+  const isTitleValid = titleForm.reportValidity();
+
+  const authorForm = document.getElementById("author");
+  const isAuthorValid = authorForm.reportValidity();
+
+  const pagesForm = document.getElementById("pages");
+  const isPagesValid = pagesForm.reportValidity();
+
+  const isReadForm = document.querySelector('input[name="is-read"]:checked');
+
+  if (!isTitleValid || !isAuthorValid || !isPagesValid) {
+    alert(isTitleValid, isAuthorValid, isPagesValid);
+    return;
   }
 
-  library.push(new Book(title, author, pages, isRead));
-  displayLibrary();
+  addBookToLibrary();
+
+  clearForm();
+
+  function addBookToLibrary() {
+    let title = titleForm.value;
+    let author = authorForm.value;
+    let pages = pagesForm.value;
+    let isReadString = isReadForm.value;
+    let isRead;
+    if (isReadString == "yes" || isReadString == "y") {
+      isRead = true;
+    } else {
+      isRead = false;
+    }
+
+    library.push(new Book(title, author, pages, isRead));
+    displayLibrary();
+  }
+
+  function clearForm() {
+    titleForm.value = "";
+    authorForm.value = "";
+    pagesForm.value = undefined;
+    document.getElementById("yes").checked = true;
+  }
 }
 
 const newBtn = document.querySelector(".new-book-btn");
-newBtn.addEventListener("click", addBookToLibrary);
+newBtn.addEventListener("click", submitBook);
 
 const holder = document.querySelector(".holder");
 
