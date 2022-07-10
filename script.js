@@ -23,7 +23,6 @@ function submitBook() {
   const isReadForm = document.querySelector('input[name="is-read"]:checked');
 
   if (!isTitleValid || !isAuthorValid || !isPagesValid) {
-    alert(isTitleValid, isAuthorValid, isPagesValid);
     return;
   }
 
