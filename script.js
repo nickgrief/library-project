@@ -7,9 +7,6 @@ function Book(title, author, pages, isRead) {
   this.isRead = isRead;
 }
 
-// Starting books for testing
-library.push(new Book("Example Book", "Delete It", "0", true));
-
 function submitBook() {
   const titleForm = document.getElementById("title");
   const isTitleValid = titleForm.reportValidity();
